@@ -2,6 +2,10 @@
 
 // config/services.yaml
 services:
+    _defaults:
+        autoconfigure: true
+        autowire: true
+        
     Arminfrey\ContaoPersonenBundle\EventListener\ContaoPersonenListener:
         tags:
             - { name: contao.hook, hook: getSystemMessages }
@@ -11,3 +15,9 @@ services:
             - '@database_connection'
         tags:
             - { name: controller.service_arguments }
+    
+    Arminfrey\ContaoPersonenBundle\Migration\PersonenMigration:
+        arguments:
+            - '@database_connection'
+        tags:
+            - { name: contao.migration }
