@@ -147,7 +147,7 @@ $GLOBALS['TL_DCA']['tl_personen'] = [
         'ansprache' => [
             'exclude' => true,
             'inputType' => 'text',
-            'eval' => ['maxlength' => 255, 'rgxp' => 'email', 'tl_class' => 'w50'],
+            'eval' => ['maxlength' => 255, 'tl_class' => 'w50'],
             'sql' => "varchar(255) NOT NULL default ''"
         ],
         'partnerfeld' => [
