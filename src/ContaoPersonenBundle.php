@@ -5,6 +5,6 @@ namespace Arminfrey\ContaoPersonenBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class ArminContaoPersonenBundle extends Bundle
+class ArminfreyContaoPersonenBundle extends Bundle
 {
 }
