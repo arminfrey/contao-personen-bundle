@@ -1,20 +1,20 @@
 <?php
 
 // src/ContaoManager/Plugin.php
-namespace Arminfrey\PersonenBundle\ContaoManager;namespace Arminfrey\ContaoGbmBundle\ContaoManager;
+namespace Arminfrey\ContaoPersonenBundle\ContaoManager;
 
 use Contao\CoreBundle\ContaoCoreBundle;
 use Contao\ManagerPlugin\Bundle\BundlePluginInterface;
 use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
 use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
-use App\PersonenverwaltungBundle;
+use Arminfrey\ContaoPersonenBundle;
 
 class Plugin implements BundlePluginInterface
 {
     public function getBundles(ParserInterface $parser): array
     {
         return [
-            BundleConfig::create(PersonenBundle::class)
+            BundleConfig::create(ContaoPersonenBundle::class)
                 ->setLoadAfter([ContaoCoreBundle::class])
         ];
     }
