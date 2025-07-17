@@ -16,7 +16,7 @@ services:
         tags:
             - { name: controller.service_arguments }
     
-    Arminfrey\ContaoPersonenBundle\Migration\PersonenMigration:
+    Arminfrey\ContaoPersonenBundle\Migration\ContaoPersonenMigration:
         arguments:
             - '@database_connection'
         tags:
