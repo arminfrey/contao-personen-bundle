@@ -2,13 +2,20 @@
 
 // contao/config/config.php
 
-use Contao\ArrayUtil;
+use Arminfrey\ContaoPersonenBundle\Model\ContaoPersonenModel;
 
-// Backend Module
-ArrayUtil::arrayInsert($GLOBALS['BE_MOD']['content'], 1, [
-    'personen' => [
-        'tables' => ['tl_personen'],
-        'icon' => 'bundles/contaocore/images/modules/user.svg',
-        'print' => ['Arminfrey\\ContaoPersonenBundle\\Controller\\ContaoPersonenController', 'generatePrintList']
-    ]
-]);
+/**
+ * -------------------------------------------------------------------------
+ * BACK END MODULES
+ * -------------------------------------------------------------------------
+ */
+
+// Add configuration to Backend
+$GLOBALS['BE_MOD']['Personen']['Personenverwaltung'] = [
+	'tables'		=>     ['tl_personen'],
+	'icon'          => 'bundles/contaocore/images/modules/user.svg',
+	'print'         => ['Arminfrey\\ContaoPersonenBundle\\Controller\\ContaoPersonenController', 'generatePrintList']
+];
+
+
+$GLOBALS['TL_MODELS']['tl_personen'] = ContaPpersonenModel::class;
