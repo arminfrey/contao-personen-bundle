@@ -8,7 +8,7 @@ use Contao\CoreBundle\Migration\MigrationResult;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
 
-class PersonenMigration extends AbstractMigration
+class ContaoPersonenMigration extends AbstractMigration
 {
     public function __construct(
         private Connection $connection
