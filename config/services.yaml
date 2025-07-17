@@ -1,0 +1,13 @@
+<?php
+
+// config/services.yaml
+services:
+    Arminfrey\ContaoPersonenBundle\EventListener\ContaoPersonenListener:
+        tags:
+            - { name: contao.hook, hook: getSystemMessages }
+    
+    Arminfrey\ContaoPersonenBundle\Controller\ContaoPersonenController:
+        arguments:
+            - '@database_connection'
+        tags:
+            - { name: controller.service_arguments }
