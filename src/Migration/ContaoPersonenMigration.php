@@ -1,13 +1,12 @@
 <?php
 
 // src/Migration/ContaoPersonenMigration.php
-// src/Migration/PersonenMigration.php
 namespace Arminfrey\ContaoPersonenBundle\Migration;
 
 use Contao\CoreBundle\Migration\AbstractMigration;
 use Contao\CoreBundle\Migration\MigrationResult;
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\Schema\Schema;
+use Doctrine\DBAL\Exception;
 
 class PersonenMigration extends AbstractMigration
 {
@@ -19,40 +18,42 @@ class PersonenMigration extends AbstractMigration
     {
         $schemaManager = $this->connection->createSchemaManager();
         
-        if (!$schemaManager->tablesExist(['tl_personen'])) {
+        try {
+            return !$schemaManager->tablesExist(['tl_personen']);
+        } catch (Exception $e) {
             return true;
         }
-        
-        return false;
     }
 
     public function run(): MigrationResult
     {
-        $schema = new Schema();
-        $table = $schema->createTable('tl_personen');
-        
-        $table->addColumn('id', 'integer', ['unsigned' => true, 'autoincrement' => true]);
-        $table->addColumn('tstamp', 'integer', ['unsigned' => true, 'default' => 0]);
-        $table->addColumn('name1', 'string', ['length' => 255, 'default' => '']);
-        $table->addColumn('vorname1', 'string', ['length' => 255, 'default' => '']);
-        $table->addColumn('name2', 'string', ['length' => 255, 'default' => '']);
-        $table->addColumn('vorname2', 'string', ['length' => 255, 'default' => '']);
-        $table->addColumn('anrede', 'string', ['length' => 10, 'default' => '']);
-        $table->addColumn('strasse', 'string', ['length' => 255, 'default' => '']);
-        $table->addColumn('hausnummer', 'string', ['length' => 20, 'default' => '']);
-        $table->addColumn('plz', 'string', ['length' => 10, 'default' => '']);
-        $table->addColumn('ort', 'string', ['length' => 255, 'default' => '']);
-        $table->addColumn('email', 'string', ['length' => 255, 'default' => '']);
-        $table->addColumn('ansprache', 'text', ['notnull' => false]);
-        $table->addColumn('partnerfeld', 'string', ['length' => 255, 'default' => '']);
-        $table->addColumn('kategorie', 'string', ['length' => 50, 'default' => '']);
-        
-        $table->setPrimaryKey(['id']);
-        
-        foreach ($schema->toSql($this->connection->getDatabasePlatform()) as $sql) {
+        try {
+            $sql = "
+                CREATE TABLE IF NOT EXISTS `tl_personen` (
+                    `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+                    `tstamp` int(10) unsigned NOT NULL DEFAULT 0,
+                    `name1` varchar(255) NOT NULL DEFAULT '',
+                    `vorname1` varchar(255) NOT NULL DEFAULT '',
+                    `name2` varchar(255) NOT NULL DEFAULT '',
+                    `vorname2` varchar(255) NOT NULL DEFAULT '',
+                    `anrede` varchar(10) NOT NULL DEFAULT '',
+                    `strasse` varchar(255) NOT NULL DEFAULT '',
+                    `hausnummer` varchar(20) NOT NULL DEFAULT '',
+                    `plz` varchar(10) NOT NULL DEFAULT '',
+                    `ort` varchar(255) NOT NULL DEFAULT '',
+                    `email` varchar(255) NOT NULL DEFAULT '',
+                    `ansprache` varchar(255) NOT NULL DEFAULT '',
+                    `partnerfeld` varchar(255) NOT NULL DEFAULT '',
+                    `kategorie` varchar(50) NOT NULL DEFAULT '',
+                    PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            ";
+            
             $this->connection->executeStatement($sql);
+            
+            return $this->createResult(true, 'Tabelle tl_personen wurde erfolgreich erstellt.');
+        } catch (Exception $e) {
+            return $this->createResult(false, 'Fehler beim Erstellen der Tabelle: ' . $e->getMessage());
         }
-
-        return $this->createResult(true, 'Tabelle tl_personen wurde erfolgreich erstellt.');
     }
 }
