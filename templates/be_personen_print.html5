@@ -1,0 +1,67 @@
+// templates/be_personen_print.html5
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title><?= $this->title ?></title>
+    <style>
+        body { font-family: Arial, sans-serif; font-size: 12px; }
+        h1 { color: #333; border-bottom: 2px solid #ccc; padding-bottom: 10px; }
+        .header { margin-bottom: 20px; }
+        .person { margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        .name { font-weight: bold; font-size: 14px; }
+        .address { color: #666; margin-top: 5px; }
+        .category { color: #999; font-style: italic; }
+        @media print {
+            body { font-size: 11px; }
+            .person { page-break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1><?= $this->title ?></h1>
+        <p>Erstellt am: <?= $this->date ?></p>
+        <p>Anzahl Personen: <?= count($this->personen) ?></p>
+    </div>
+    
+    <?php foreach ($this->personen as $person): ?>
+        <div class="person">
+            <div class="name">
+                <?= $person['vorname1'] ? $person['vorname1'] . ' ' : '' ?><?= $person['name1'] ?>
+                <?php if ($person['name2'] || $person['vorname2']): ?>
+                    & <?= $person['vorname2'] ? $person['vorname2'] . ' ' : '' ?><?= $person['name2'] ?>
+                <?php endif; ?>
+                <span class="category">[<?= $person['kategorie'] ?>]</span>
+            </div>
+            
+            <?php if ($person['anrede']): ?>
+                <div>Anrede: <?= $person['anrede'] ?></div>
+            <?php endif; ?>
+            
+            <?php if ($person['strasse'] || $person['hausnummer'] || $person['plz'] || $person['ort']): ?>
+                <div class="address">
+                    <?= $person['strasse'] ?><?= $person['hausnummer'] ? ' ' . $person['hausnummer'] : '' ?><br>
+                    <?= $person['plz'] ?> <?= $person['ort'] ?>
+                </div>
+            <?php endif; ?>
+            
+            <?php if ($person['email']): ?>
+                <div>E-Mail: <?= $person['email'] ?></div>
+            <?php endif; ?>
+            
+            <?php if ($person['partnerfeld']): ?>
+                <div>Partner: <?= $person['partnerfeld'] ?></div>
+            <?php endif; ?>
+            
+            <?php if ($person['ansprache']): ?>
+                <div>Ansprache: <?= nl2br($person['ansprache']) ?></div>
+            <?php endif; ?>
+        </div>
+    <?php endforeach; ?>
+    
+    <script>
+        window.print();
+    </script>
+</body>
+</html>
