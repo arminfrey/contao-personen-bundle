@@ -22,7 +22,7 @@ $GLOBALS['TL_DCA']['tl_personen'] = [
             'fields' => ['name1', 'vorname1'],
             'panelLayout' => 'filter;sort,search,limit',
             'headerFields' => ['name1', 'vorname1', 'ort', 'kategorie'],
-            'child_record_callback' => ['App\\EventListener\\PersonenListener', 'listPersonen']
+            'child_record_callback' => ['Arminfrey\\ContaoPersonenBundle\\EventListener\\ContaoPersonenListener', 'listPersonen']
         ],
         'global_operations' => [
             'all' => [
